@@ -1,8 +1,8 @@
 FROM alpine:3.13
 
 #	Install nginx
-RUN apt-get update && apt-get install-y \
-	nginx \
+RUN apk update && apk add \
+	nginx 
 
 #	Copy config to Docker dir
 
