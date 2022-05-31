@@ -4,9 +4,12 @@ FROM alpine:3.13
 RUN apk update && apk add \
 	nginx 
 
+#	Create dir for nginx to work for some reasons
+RUN mkdir -p /run/nginx
+
 #	Copy config to Docker dir
 
-#COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 #	Directory for html files
 
