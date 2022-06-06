@@ -2,21 +2,20 @@ FROM alpine:3.13
 
 #	Install nginx
 RUN apk update && apk add \
-	nginx 
+	nginx \
+	openssl
+
+#	openssl configuration
+RUN mkdir /etc/nginx/ssl && \
+	openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
+	-keyout /etc/nginx/ssl/nginx.key \
+	-out /etc/nginx/ssl/nginx.crt \
+	-subj "/C=BE/L=Bruxelles/O=19/CN=tamighi.19.be"
 
 #	Create dir for nginx to work for some reasons
 RUN mkdir -p /run/nginx
 
-#	Copy config to Docker dir
-
+#	Copy config to nginx dir
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-
-#	Directory for html files
-
-#	Backup original nginx.conf file
-
-#	Configure nginx to listen to port 8 and process html files
-
-EXPOSE 443
 
 CMD ["nginx", "-g" ,"daemon off;"]
