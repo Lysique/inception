@@ -7,16 +7,48 @@ services:
         ports:
             - 443:443
         restart: always
+        volumes:
+            - ./html:/var/www/html
+        networks:
+            - mynetwork
     wordpress:
         container_name: wordpress
         build: requirements/wordpress
         ports:
-            - 8080:80
+            - 9000:9000
         restart: always
+        depends_on:
+            - mariadb
+            - nginx
         environment:
-            WP_DATABASE_NAME:       ${WP_DATABASE_NAME}
-            WP_DATABASE_USR:        ${WP_DATABASE_USR}
-            WP_DATABASE_PWD:        ${WP_DATABASE_PWD}
+            WORDPRESS_DB_USR:       ${WORDPRESS_DB_USR}      
+            WORDPRESS_DB_PASSWORD:  ${WORDPRESS_DB_PASSWORD}
+            WORDPRESS_DB_HOST:      ${WORDPRESS_DB_HOST}
+            MYSQL_HOST:             ${MYSQL_HOST}
             DOMAIN_NAME:            ${DOMAIN_NAME}
-            MYSQL_ROOT_PASSWORD:    ${MSQL_ROOT_PASSWORD}
+            ADMIN_USER:             ${ADMIN_USER}
+            ADMIN_PWD:              ${ADMIN_PWD}
+            WP_USR:                 ${WP_USR}
+            WP_PWD:                 ${WP_PWD}
 
+        volumes:
+            - ./html:/var/www/html
+        networks:
+            - mynetwork
+    mariadb:
+        container_name: mariadb
+        build: requirements/mariadb
+        ports:
+            - 3306:3306
+        restart: always
+        volumes:
+            - ./data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD:    ${MYSQL_ROOT_PASSWORD}
+            WORDPRESS_DB_HOST:      ${WORDPRESS_DB_HOST}
+            WORDPRESS_DB_USR:       ${WORDPRESS_DB_USR}
+            WORDPRESS_DB_PASSWORD:  ${WORDPRESS_DB_PASSWORD}
+        networks:
+            - mynetwork
+networks:
+    mynetwork:
