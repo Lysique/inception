@@ -1,20 +1,22 @@
-version: "2.5.1"
+version: "3"
  
 services:
     nginx:
-        container_name: "nginx"
-        build: ./requirements/nginx/
+        container_name: nginx
+        build: requirements/nginx
         ports:
-            - "443:443"
+            - 443:443
         restart: always
-
-            #depends_on
-            #networks
-            #volumes
     wordpress:
-        container_name: "wordpress"
-        build: ./requirements/wordpress/
+        container_name: wordpress
+        build: requirements/wordpress
         ports:
-            - "9000:9000"
+            - 8080:80
         restart: always
-        #depends_on:
+        environment:
+            WP_DATABASE_NAME:       ${WP_DATABASE_NAME}
+            WP_DATABASE_USR:        ${WP_DATABASE_USR}
+            WP_DATABASE_PWD:        ${WP_DATABASE_PWD}
+            DOMAIN_NAME:            ${DOMAIN_NAME}
+            MYSQL_ROOT_PASSWORD:    ${MSQL_ROOT_PASSWORD}
+
