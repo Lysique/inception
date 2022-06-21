@@ -3,51 +3,40 @@ version: "3"
 services:
     nginx:
         container_name: nginx
-        build: requirements/nginx
+        build: requirements/nginx/
+        depends_on:
+            - wordpress
+        volumes:
+            - ./data:/var/www/html
         ports:
             - 443:443
-        restart: always
-        volumes:
-            - ./html:/var/www/html
         networks:
             - mynetwork
     wordpress:
-        container_name: wordpress
-        build: requirements/wordpress
-        ports:
-            - 9000:9000
-        restart: always
-        depends_on:
-            - mariadb
-            - nginx
-        environment:
-            WORDPRESS_DB_USR:       ${WORDPRESS_DB_USR}      
-            WORDPRESS_DB_PASSWORD:  ${WORDPRESS_DB_PASSWORD}
-            WORDPRESS_DB_HOST:      ${WORDPRESS_DB_HOST}
-            MYSQL_HOST:             ${MYSQL_HOST}
-            DOMAIN_NAME:            ${DOMAIN_NAME}
-            ADMIN_USER:             ${ADMIN_USER}
-            ADMIN_PWD:              ${ADMIN_PWD}
-            WP_USR:                 ${WP_USR}
-            WP_PWD:                 ${WP_PWD}
-
+        image: wordpress:php7.3-fpm-alpine
         volumes:
-            - ./html:/var/www/html
+            - ./data:/var/www/html
+        depends_on:
+            - mysql
+        environment:
+            WORDPRESS_DB_HOST: mysql
+            MYSQL_ROOT_PASSWORD: mysql_root_pass
+            WORDPRESS_DB_NAME: db_name
+            WORDPRESS_DB_USER: user_name
+            WORDPRESS_DB_PASS: user_pass
         networks:
             - mynetwork
-    mariadb:
-        container_name: mariadb
-        build: requirements/mariadb
-        ports:
-            - 3306:3306
         restart: always
+    mysql:
+        image: mariadb
         volumes:
             - ./data:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PASSWORD:    ${MYSQL_ROOT_PASSWORD}
-            WORDPRESS_DB_HOST:      ${WORDPRESS_DB_HOST}
-            WORDPRESS_DB_USR:       ${WORDPRESS_DB_USR}
-            WORDPRESS_DB_PASSWORD:  ${WORDPRESS_DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: mysql_root_pass
+            MYSQL_DATABASE: db_name
+            MYSQL_USER: user_name
+            MYSQL_PASSWORD: user_pass
+        restart: always
         networks:
             - mynetwork
 networks:

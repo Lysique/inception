@@ -8,7 +8,8 @@ wp config create --dbname=$WORDPRESS_DB_HOST --dbuser=$WORDPRESS_DB_USR \
 #	Install
 wp core install --url=$DOMAIN_NAME/wordpress --title=$TITLE \
 	--admin_user=$ADMIN_USER --admin_password=$ADMIN_PWD \
-	--skip-email --admin_email=info@example.com --allow-root
+	--skip-email --admin_email=info@example.com --allow-root \
+	--path=\var\www\html
 
 wp user create $WP_USR usr@example.com --role=author --user_pass=$WP_PWD --allow-root
 
