@@ -6,7 +6,7 @@ if [ ! -f "wp-config.php" ]; then
 	#	Generate config file and set up db
 	wp config create --dbname=$WORDPRESS_DB_NAME \
 	--dbuser=$WORDPRESS_DB_USER --dbpass=$WORDPRESS_DB_PASS \
-	--dbhost=$MYSQL_HOST --allow-root
+	--dbhost=$WORDPRESS_DB_HOST --allow-root
 
 	#	Install
 	wp core install --url=$URL --title=$TITLE \

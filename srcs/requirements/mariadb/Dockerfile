@@ -5,8 +5,8 @@ RUN apk update && apk add \
 	mariadb \
 	mariadb-client
 
-EXPOSE 3306
+COPY ./conf/conf.sh /tmp/configure.sh
 
-COPY conf/conf.sh /tmp/configure.sh
+EXPOSE 3306
 
 ENTRYPOINT ["sh", "/tmp/configure.sh"]
