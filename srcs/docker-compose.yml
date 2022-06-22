@@ -7,7 +7,7 @@ services:
         depends_on:
             - wordpress
         volumes:
-            - ./data:/var/www/html
+            - ./wordpress:/var/www/html
         ports:
             - 443:443
         networks:
@@ -16,22 +16,28 @@ services:
         container_name: wordpress
         build: requirements/wordpress/
         volumes:
-            - ./data:/var/www/html
+            - ./wordpress:/var/www/html
         depends_on:
             - mariadb
         environment:
-            WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+            WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
             WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
             WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
             WORDPRESS_DB_PASS: ${WORDPRESS_DB_PASS}
+
+            URL: ${URL}
             MYSQL_HOST: ${MYSQL_HOST}
-            DOMAIN_NAME: ${DOMAIN_NAME}
             TITLE: ${TITLE}
+
             ADMIN_USER: ${ADMIN_USER}
             ADMIN_PWD: ${ADMIN_PWD}
-            WP_USER: ${WP_USER}
-            WP_PASS: ${WP_PASS}
+            ADMIN_MAIL: ${ADMIN_MAIL}
+
+            WP_USER_NAME: ${WP_USER_NAME}
+            WP_USER_PASS: ${WP_USER_PASS}
+            WP_USER_MAIL: ${WP_USER_MAIL}
         networks:
             - mynetwork
         restart: always
