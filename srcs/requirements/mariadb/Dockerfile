@@ -5,8 +5,10 @@ RUN apk update && apk add \
 	mariadb \
 	mariadb-client
 
-COPY ./conf/conf.sh /tmp/configure.sh
+COPY ./conf/conf.sh /tmp/conf.sh
+
+RUN mkdir -p /run/mysqld
 
 EXPOSE 3306
 
-ENTRYPOINT ["sh", "/tmp/configure.sh"]
+ENTRYPOINT ["sh", "/tmp/conf.sh"]

@@ -8,3 +8,19 @@ services:
             - 443:443
         volumes:
             - ./wordpress:/data/wordpress
+        networks:
+             - mynetwork
+    mariadb:
+        container_name: mariadb
+        build: requirements/mariadb/
+        volumes:
+            - ./data:/var/lib/mysql
+        environment:
+           MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+           MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
+           MYSQL_USER: ${WORDPRESS_DB_USER}
+           MYSQL_PASSWORD: ${WORDPRESS_DB_PASS}
+        networks:
+            - mynetwork
+networks:
+    mynetwork:

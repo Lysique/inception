@@ -58,9 +58,12 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 RUN chmod +x wp-cli.phar && \
 	mv wp-cli.phar /usr/local/bin/wp
 
+#	Run dir
 RUN mkdir -p /run/php
 
-RUN	adduser -S nginx &&	addgroup -S nginx
+#RUN	adduser -S nginx &&	addgroup -S nginx
+
+#	php-fpm conf
 COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
 COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
 
