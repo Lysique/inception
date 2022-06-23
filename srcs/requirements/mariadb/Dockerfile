@@ -8,6 +8,7 @@ RUN apk update && apk add \
 COPY ./conf/conf.sh /tmp/conf.sh
 
 RUN mkdir -p /run/mysqld
+RUN chown -R mysql:mysql /run/mysqld
 
 EXPOSE 3306
 
