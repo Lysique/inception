@@ -4,6 +4,8 @@ services:
     nginx:
         container_name: nginx
         build: requirements/nginx/
+        depends_on:
+            - wordpress
         ports:
             - 443:443
         volumes:
@@ -20,6 +22,22 @@ services:
            MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
            MYSQL_USER: ${WORDPRESS_DB_USER}
            MYSQL_PASSWORD: ${WORDPRESS_DB_PASS}
+        networks:
+            - mynetwork
+    wordpress:
+        depends_on:
+          - mariadb
+        image: wordpress:latest
+        volumes:
+          - ./wordpress:/var/www/html
+            #ports:
+            #- "8000:80"
+        restart: always
+        environment:
+          WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+          WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+          WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASS}
+          WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
         networks:
             - mynetwork
 networks:
