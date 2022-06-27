@@ -1,12 +1,9 @@
-mysql_install_db --user=mysql \
-	--datadir=/var/lib/mysql
+mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm
 
-cat << EOF > tfile
-SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQL_ROOT_PASSWORD');
-CREATE DATABASE $MYSQL_DATABASE;
-CREATE USER '$MYSQL_USER'@'%' IDENTIFIED by '$MYSQL_PASSWORD';
-GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
-FLUSH PRIVILEGES;
-EOF
+mysqld --user=mysql --bootstrap < /tmp/mysqlconf.sql
 
-mysqld --user=mysql < tfile
+# allow remote connections
+sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
+sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
+
+exec mysqld --user=mysql --console

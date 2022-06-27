@@ -9,7 +9,7 @@ services:
         ports:
             - 443:443
         volumes:
-            - ./wordpress:/data/wordpress
+            - ./wordpress:/var/www/html
         networks:
              - mynetwork
     mariadb:
@@ -17,6 +17,7 @@ services:
         build: requirements/mariadb/
         volumes:
             - ./data:/var/lib/mysql
+        restart: always
         environment:
            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
            MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
@@ -25,19 +26,28 @@ services:
         networks:
             - mynetwork
     wordpress:
+        container_name: wordpress
+        build: requirements/wordpress/
         depends_on:
           - mariadb
-        image: wordpress:latest
         volumes:
           - ./wordpress:/var/www/html
-            #ports:
-            #- "8000:80"
         restart: always
         environment:
           WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
           WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-          WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASS}
+          WORDPRESS_DB_PASS: ${WORDPRESS_DB_PASS}
           WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+
+          URL: ${URL}
+          TITLE: ${TITLE}
+          ADMIN_USER: ${ADMIN_USER}
+          ADMIN_PWD: ${ADMIN_PWD}
+          ADMIN_MAIL: ${ADMIN_MAIL}
+
+          WP_USER_NAME: ${WP_USER_NAME}
+          WP_USER_PASS: ${WP_USER_PASS}
+          WP_USER_MAIL: ${WP_USER_MAIL}
         networks:
             - mynetwork
 networks:

@@ -61,7 +61,7 @@ RUN chmod +x wp-cli.phar && \
 #	Run dir
 RUN mkdir -p /run/php
 
-#RUN	adduser -S nginx &&	addgroup -S nginx
+RUN	adduser -S nginx &&	addgroup -S nginx
 
 #	php-fpm conf
 COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
