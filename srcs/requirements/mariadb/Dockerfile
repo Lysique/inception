@@ -5,6 +5,9 @@ RUN apk update && apk add \
 	mariadb \
 	mariadb-client
 
+RUN mkdir -p /run/mysqld
+RUN chown -R mysql:mysql /run/mysqld
+
 COPY ./conf/conf.sh /tmp/configure.sh
 
 EXPOSE 3306
