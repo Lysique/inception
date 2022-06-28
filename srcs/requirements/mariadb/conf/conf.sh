@@ -1,6 +1,7 @@
-#	Mariadb configuration
-# init database
-mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql
+mysql_install_db --basedir=/usr \
+	--datadir=/var/lib/mysql \
+	--user=mysql \
+	--skip-test-db
 
 tfile=`mktemp`
 
@@ -17,7 +18,7 @@ GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
 
 FLUSH PRIVILEGES;
 EOF
-# run init.sql
+
 mysqld --user=mysql --bootstrap < $tfile
 rm -f $tfile
 

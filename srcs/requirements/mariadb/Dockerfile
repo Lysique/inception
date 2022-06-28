@@ -8,8 +8,8 @@ RUN apk update && apk add \
 RUN mkdir -p /run/mysqld
 RUN chown -R mysql:mysql /run/mysqld
 
-COPY ./conf/conf.sh /tmp/configure.sh
-
 EXPOSE 3306
+
+COPY ./conf/conf.sh /tmp/configure.sh
 
 ENTRYPOINT ["sh", "/tmp/configure.sh"]

@@ -20,15 +20,12 @@ services:
         depends_on:
             - mariadb
         environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-
             WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
             WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
             WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
             WORDPRESS_DB_PASS: ${WORDPRESS_DB_PASS}
 
             URL: ${URL}
-            MYSQL_HOST: ${MYSQL_HOST}
             TITLE: ${TITLE}
 
             ADMIN_USER: ${ADMIN_USER}
