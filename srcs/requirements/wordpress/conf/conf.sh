@@ -1,3 +1,4 @@
+sleep 5
 wp core download --allow-root
 
 wp config create --dbname=$WORDPRESS_DB_NAME \

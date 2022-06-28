@@ -1,4 +1,7 @@
-mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm
+mysql_install_db --basedir=/usr \
+	--datadir=/var/lib/mysql \
+	--user=mysql \
+	--skip-test-db
 
 mysqld --user=mysql --bootstrap < /tmp/mysqlconf.sql
 
