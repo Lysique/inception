@@ -18,4 +18,6 @@ RUN mkdir -p /run/nginx
 #	Copy config to nginx dir
 COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 
-CMD ["nginx", "-g" ,"daemon off;"]
+COPY conf/conf.sh /tmp/conf.sh
+
+ENTRYPOINT ["sh", "/tmp/conf.sh"]
