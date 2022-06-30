@@ -8,7 +8,7 @@ wp config create --dbname=$WORDPRESS_DB_NAME \
 --dbhost=$WORDPRESS_DB_HOST --allow-root
 
 #	Install
-wp core install --url=$URL --title=$TITLE \
+wp core install --url=https://localhost/ --title=$TITLE \
 	--admin_user=$ADMIN_USER --admin_password=$ADMIN_PWD \
 	--skip-email --admin_email=$ADMIN_MAIL --allow-root 
 

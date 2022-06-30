@@ -61,12 +61,14 @@ RUN chmod +x wp-cli.phar && \
 RUN mkdir -p /run/php
 
 RUN	adduser -S nginx &&	addgroup -S nginx
+
 COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
 COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
 
 COPY conf/conf.sh /tmp/conf.sh
 
 WORKDIR /var/www/html
+EXPOSE 9000
 
 #	configure wordpress
 ENTRYPOINT [ "sh", "/tmp/conf.sh"]
