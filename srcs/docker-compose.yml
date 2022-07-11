@@ -7,7 +7,7 @@ services:
         depends_on:
             - wordpress
         volumes:
-            - ./wordpress:/var/www/html
+            - /home/tamighi/data/files:/var/www/html
         ports:
             - 443:443
         networks:
@@ -16,7 +16,7 @@ services:
         container_name: wordpress
         build: requirements/wordpress/
         volumes:
-            - ./wordpress:/var/www/html
+            - /home/tamighi/data/files:/var/www/html
         depends_on:
             - mariadb
         environment:
@@ -42,7 +42,7 @@ services:
         container_name: mariadb
         build: requirements/mariadb/
         volumes:
-            - ./data:/var/lib/mysql
+            - /home/tamighi/data/db:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
