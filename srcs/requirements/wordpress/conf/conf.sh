@@ -3,10 +3,9 @@ sleep 3
 wp core download --allow-root
 
 #	Generate config file and set up db
-#wp config create --dbname=$WORDPRESS_DB_NAME \
-#--dbuser=$WORDPRESS_DB_USER --dbpass=$WORDPRESS_DB_PASS \
-#--dbhost=$WORDPRESS_DB_HOST --allow-root
-mv /tmp/wp-config.php /var/www/html
+wp config create --dbname=$WORDPRESS_DB_NAME \
+--dbuser=$WORDPRESS_DB_USER --dbpass=$WORDPRESS_DB_PASS \
+--dbhost=$WORDPRESS_DB_HOST --allow-root
 
 #	Install
 wp core install --url=$URL --title=$TITLE \

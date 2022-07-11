@@ -13,10 +13,12 @@
 all: stop load
 
 load:
-	docker-compose -f ./srcs/docker-compose.yml up -d --build
+	cd srcs && \
+	docker-compose up -d --build
 
 stop:
-	docker-compose -f ./srcs/docker-compose.yml down
+	cd srcs && \
+	docker-compose down
 
 prune: stop
 	docker system prune -af
